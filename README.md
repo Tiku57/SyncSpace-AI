@@ -250,12 +250,6 @@ Contributions are welcome! Please open an issue or submit a pull request.
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
----
-
 <p align="center">
   Built with by <a href="https://github.com/Tiku57"><strong>Tiku57</strong></a>
 </p>
