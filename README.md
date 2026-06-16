@@ -253,3 +253,28 @@ Contributions are welcome! Please open an issue or submit a pull request.
 <p align="center">
   Built with by <a href="https://github.com/Tiku57"><strong>Tiku57</strong></a>
 </p>
+
+## 🚀 Production Deployment
+
+### 1. Deploy the Backend (Railway)
+1. Go to [Railway.app](https://railway.app/) and create a **New Project** -> **Deploy from GitHub repo**.
+2. Select your `SyncSpace-AI` repository.
+3. The included `railway.json` file will automatically configure the build and start commands for the Express backend.
+4. Add the following **Environment Variables** in Railway:
+   - `PORT`: `3001`
+   - `GEMINI_API_KEY`: *(Your Google Gemini API Key)*
+   - `FRONTEND_URL`: *(Leave blank for now, you will update this after Vercel is deployed)*
+5. Wait for the deployment to finish and copy the generated public URL (e.g., `https://syncspace-backend.up.railway.app`).
+
+### 2. Deploy the Frontend (Vercel)
+1. Go to [Vercel.com](https://vercel.com/) and click **Add New Project**.
+2. Import the `SyncSpace-AI` repository.
+3. **CRITICAL**: In the "Framework Preset", select **Next.js**. Then change the **Root Directory** to `frontend`.
+4. Add the following **Environment Variable**:
+   - `NEXT_PUBLIC_SOCKET_URL`: *(Paste the Railway Backend URL you copied)*
+5. Click **Deploy**. Vercel will build and assign you a URL (e.g., `https://syncspace-ai.vercel.app`).
+
+### 3. Final Connection
+1. Go back to Railway settings.
+2. Update the `FRONTEND_URL` environment variable to your new Vercel URL (e.g., `https://syncspace-ai.vercel.app`).
+3. Railway will automatically redeploy with the correct CORS configuration.
