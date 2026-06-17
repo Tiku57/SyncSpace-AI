@@ -10,7 +10,7 @@ export const CameraToolbar = () => {
   };
 
   return (
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center space-x-2 bg-zinc-950/80 backdrop-blur-xl border border-white/10 px-4 py-3 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50">
+    <div className="absolute bottom-20 lg:bottom-6 left-1/2 -translate-x-1/2 flex items-center space-x-2 bg-zinc-950/80 backdrop-blur-xl border border-white/10 px-4 py-3 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 overflow-x-auto whitespace-nowrap max-w-[95vw] scrollbar-thin scrollbar-thumb-white/10">
       <div className="text-xs font-semibold text-zinc-400 mr-2 flex items-center space-x-1">
         <View className="w-4 h-4" />
         <span>CAMERA</span>

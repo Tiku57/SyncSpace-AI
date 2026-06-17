@@ -10,7 +10,7 @@ export const LiveValidationHUD = () => {
   const isBudgetCompliant = subtotal <= 10000 && items.length > 0;
 
   return (
-    <div className="absolute top-24 left-6 z-[9999] pointer-events-none animate-in slide-in-from-left duration-500">
+    <div className="absolute top-4 left-4 md:top-24 md:left-6 z-[9999] pointer-events-none animate-in slide-in-from-left duration-500">
       <div className="bg-zinc-950/80 backdrop-blur-xl border border-white/10 rounded-xl p-3 shadow-2xl flex flex-col space-y-2">
         
         <div className="flex items-center space-x-2">
