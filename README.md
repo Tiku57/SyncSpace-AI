@@ -169,8 +169,5 @@ This project is configured for cloud deployment across Vercel (Frontend) and Ren
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📜 License
-Distributed under the MIT License.
-
 ## 👨‍💻 Author
 **Tiku57** - [GitHub](https://github.com/Tiku57)
