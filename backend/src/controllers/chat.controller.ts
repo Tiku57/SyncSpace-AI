@@ -104,11 +104,15 @@ export const handleUserMessage = async (
 
     // Generic error
     console.error(`[REQUEST ${requestId}] FAILED — ${duration}ms:`, error?.message || error);
+    
+    const isNoObjectsError = error?.message === "Failed to create workspace. No objects were generated.";
+    const fallbackText = "I wasn't able to analyze your workspace right now. Please try again.";
+    
     socket.emit('ai:stream:end', { id: aiMessageId, requestId });
     socket.emit('ai:response', {
       message: {
         id: `error-${Date.now()}`,
-        text: "I wasn't able to analyze your workspace right now. Please try again.",
+        text: isNoObjectsError ? error.message : fallbackText,
         timestamp: new Date().toISOString()
       },
       requestId

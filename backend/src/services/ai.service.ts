@@ -471,6 +471,16 @@ EXPLICIT INSTRUCTIONS:
         console.warn(`[LAYOUT_WARNING] Layout engine resolved with ${validation.collisionCount} collisions.`);
       }
 
+      if (intent === 'CREATE_WORKSPACE' && resolvedWorkspace.length === 0) {
+        console.error("\n[CRITICAL VALIDATION ERROR] Model claimed to create workspace but generated 0 objects.");
+        console.error("Parsed AI response:", JSON.stringify(data, null, 2));
+        console.error("Generated action list:", JSON.stringify(data.actions, null, 2));
+        console.error("Object creation results: 0 objects added to localWorkspace");
+        console.error("Placement results: Skipped (no objects)");
+        console.error("Scene update results: Skipped (no objects)");
+        throw new Error("Failed to create workspace. No objects were generated.");
+      }
+
       // Convert the final resolved state into a singular sync action for the client
       const formattedActions: { type: 'add' | 'update' | 'remove' | 'recommendation' | 'sync' | 'clear_workspace', item?: WorkspaceItem, itemId?: string, payload?: any, workspace?: WorkspaceItem[] }[] = [];
       
