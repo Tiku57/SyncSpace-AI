@@ -83,13 +83,13 @@ export const AIChat = () => {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.3 }}
-              className={`flex items-start space-x-3 ${msg.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
+              className={`flex items-start space-x-3 w-full min-w-0 ${msg.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
             >
               <div className={`p-2 rounded-full flex-shrink-0 ${msg.sender === 'user' ? 'bg-zinc-800' : 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30'}`}>
                 {msg.sender === 'user' ? <User className="w-4 h-4 text-zinc-300" /> : <Bot className="w-4 h-4" />}
               </div>
-              <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                <div className={`px-4 py-3 rounded-2xl max-w-[85%] sm:max-w-[280px] break-words whitespace-pre-wrap text-sm leading-relaxed ${
+              <div className={`flex flex-col flex-1 min-w-0 ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                <div className={`px-4 py-3 rounded-2xl w-fit max-w-[90%] break-words [word-break:break-word] min-w-0 whitespace-pre-wrap text-sm leading-relaxed ${
                   msg.sender === 'user' 
                     ? 'bg-zinc-800 text-zinc-100 rounded-tr-sm' 
                     : 'bg-zinc-900 border border-white/5 text-zinc-300 rounded-tl-sm shadow-xl'

@@ -11,7 +11,7 @@ import { CameraToolbar } from '@/components/workspace/CameraToolbar';
 import { DemoEngine } from '@/components/workspace/DemoEngine';
 import { LiveValidationHUD } from '@/components/workspace/LiveValidationHUD';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BarChart2, MessageSquare, Monitor, Menu, X } from 'lucide-react';
+import { BarChart2, MessageSquare, Monitor, Menu, X, ShoppingCart } from 'lucide-react';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,28 +66,24 @@ function Header() {
   );
 }
 
-function Sidebar() {
-  return (
-    <div className="w-[340px] xl:w-[380px] flex-shrink-0 border-r border-white/10 bg-zinc-950/50 p-6 overflow-y-auto z-10 flex flex-col gap-8 relative hidden lg:flex">
-      <AnalyticsPanel />
-      <PricingTable />
-    </div>
-  );
-}
-
 export default function Home() {
-  const [mobileTab, setMobileTab] = useState<'canvas' | 'analytics' | 'chat'>('canvas');
+  const [mobileTab, setMobileTab] = useState<'canvas' | 'analytics' | 'pricing' | 'chat'>('canvas');
 
   return (
-    <main className="flex flex-col h-[100dvh] w-full overflow-hidden bg-black text-white selection:bg-indigo-500/30 relative">
+    <main className="flex flex-col h-[100dvh] w-full max-w-full overflow-hidden bg-black text-white selection:bg-indigo-500/30 relative">
       
       <Header />
       
-      <div className="flex flex-1 overflow-hidden relative pb-16 lg:pb-0">
-        <Sidebar />
+      <div className="flex flex-1 min-w-0 min-h-0 overflow-hidden relative pb-16 lg:pb-0">
         
-        {/* Workspace */}
-        <div className="flex-1 relative cursor-grab active:cursor-grabbing z-[1]">
+        {/* Desktop Left Sidebar (Hidden on mobile) */}
+        <div className="hidden lg:flex w-[280px] xl:w-[340px] flex-shrink-0 border-r border-white/10 bg-zinc-950/50 p-6 overflow-y-auto z-10 flex-col gap-8 relative min-w-0">
+          <AnalyticsPanel />
+          <PricingTable />
+        </div>
+        
+        {/* Workspace Canvas (Center Desktop, Tab 1 Mobile) */}
+        <div className={`flex-1 relative cursor-grab active:cursor-grabbing z-[1] min-w-0 ${mobileTab === 'canvas' ? 'flex flex-col' : 'hidden lg:flex lg:flex-col'}`}>
           <WorkspaceCanvas />
           <LiveValidationHUD />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/40 to-black/80 pointer-events-none" />
@@ -96,44 +92,33 @@ export default function Home() {
           </div>
           <CameraToolbar />
         </div>
+
+        {/* Mobile Analytics Tab */}
+        <div className={`flex-1 overflow-y-auto p-4 z-10 min-w-0 bg-zinc-950 ${mobileTab === 'analytics' ? 'block lg:hidden' : 'hidden'}`}>
+          <AnalyticsPanel />
+        </div>
+
+        {/* Mobile Pricing Tab */}
+        <div className={`flex-1 overflow-y-auto p-4 z-10 min-w-0 bg-zinc-950 ${mobileTab === 'pricing' ? 'block lg:hidden' : 'hidden'}`}>
+          <PricingTable />
+        </div>
         
-        {/* Desktop Chat */}
-        <div className="w-[340px] lg:w-[420px] border-l border-white/10 bg-zinc-950/50 flex-shrink-0 relative flex-col z-10 shadow-[-20px_0_50px_rgba(0,0,0,0.5)] hidden lg:flex">
+        {/* Chat (Right Desktop, Tab 4 Mobile) */}
+        <div className={`w-full lg:w-[340px] xl:w-[420px] border-l border-white/10 bg-zinc-950/50 flex-shrink-0 relative flex-col z-10 shadow-[-20px_0_50px_rgba(0,0,0,0.5)] min-w-0 ${mobileTab === 'chat' ? 'flex' : 'hidden lg:flex'}`}>
           <AIChat />
         </div>
+
       </div>
 
-      {/* Mobile Drawers (AnimatePresence) */}
-      <AnimatePresence>
-        {mobileTab === 'analytics' && (
-          <motion.div
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 top-[60px] md:top-[70px] z-[90] bg-zinc-950 lg:hidden overflow-y-auto pb-20 p-4 flex flex-col gap-6"
-          >
-            <h2 className="text-xl font-bold text-white mb-2">Analytics & Pricing</h2>
-            <AnalyticsPanel />
-            <PricingTable />
-          </motion.div>
-        )}
-
-        {mobileTab === 'chat' && (
-          <motion.div
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 top-[60px] md:top-[70px] z-[90] bg-zinc-950 lg:hidden pb-16"
-          >
-            <AIChat />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 h-16 bg-zinc-950/90 backdrop-blur-md border-t border-white/10 z-[100] flex items-center justify-around lg:hidden px-4">
+      <div className="fixed bottom-0 left-0 right-0 h-16 bg-zinc-950/90 backdrop-blur-md border-t border-white/10 z-[100] flex items-center justify-around lg:hidden px-2 max-w-full">
+        <button 
+          onClick={() => setMobileTab('canvas')}
+          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${mobileTab === 'canvas' ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300'}`}
+        >
+          <Monitor className="w-5 h-5" />
+          <span className="text-[10px] font-medium">Canvas</span>
+        </button>
         <button 
           onClick={() => setMobileTab('analytics')}
           className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${mobileTab === 'analytics' ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300'}`}
@@ -142,11 +127,11 @@ export default function Home() {
           <span className="text-[10px] font-medium">Analytics</span>
         </button>
         <button 
-          onClick={() => setMobileTab('canvas')}
-          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${mobileTab === 'canvas' ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300'}`}
+          onClick={() => setMobileTab('pricing')}
+          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${mobileTab === 'pricing' ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300'}`}
         >
-          <Monitor className="w-5 h-5" />
-          <span className="text-[10px] font-medium">Canvas</span>
+          <ShoppingCart className="w-5 h-5" />
+          <span className="text-[10px] font-medium">Pricing</span>
         </button>
         <button 
           onClick={() => setMobileTab('chat')}
