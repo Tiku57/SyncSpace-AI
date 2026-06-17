@@ -11,24 +11,57 @@ import { CameraToolbar } from '@/components/workspace/CameraToolbar';
 import { DemoEngine } from '@/components/workspace/DemoEngine';
 import { LiveValidationHUD } from '@/components/workspace/LiveValidationHUD';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BarChart2, MessageSquare, Monitor } from 'lucide-react';
+import { BarChart2, MessageSquare, Monitor, Menu, X } from 'lucide-react';
 
 function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 w-full flex flex-wrap justify-between items-center px-4 md:px-6 py-3 md:py-4 bg-zinc-950/80 border-b border-white/10 z-[9999] flex-shrink-0 backdrop-blur-md gap-y-3">
+    <header className="sticky top-0 w-full flex flex-wrap justify-between items-center px-4 md:px-6 py-3 md:py-4 bg-zinc-950/80 border-b border-white/10 z-[9999] flex-shrink-0 backdrop-blur-md">
       <div className="flex items-center space-x-3 md:space-x-6">
-        <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 tracking-tighter">
+        <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 tracking-tighter shrink-0">
           SyncSpace <span className="font-light text-white/50 hidden sm:inline">AI</span>
         </h1>
-        <div className="flex items-center space-x-2">
+        {/* Desktop Actions */}
+        <div className="hidden md:flex items-center space-x-2">
           <DemoEngine />
           <ExportSystem />
         </div>
       </div>
-      <div className="flex items-center space-x-2 bg-white/5 backdrop-blur-md px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-white/10 shadow-lg">
-        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-        <span className="text-xs md:text-sm font-medium text-white/80 whitespace-nowrap">Live Engine</span>
+      
+      <div className="flex items-center space-x-3 shrink-0">
+        <div className="flex items-center space-x-2 bg-white/5 backdrop-blur-md px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-white/10 shadow-lg">
+          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></div>
+          <span className="text-xs md:text-sm font-medium text-white/80 whitespace-nowrap">Live Engine</span>
+        </div>
+        
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors bg-white/5 rounded-lg border border-white/10 shrink-0"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+        </button>
       </div>
+
+      {/* Mobile Actions Drawer */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="w-full md:hidden mt-3 pt-3 border-t border-white/10 flex flex-col gap-3 overflow-hidden"
+          >
+            <div className="w-full overflow-x-auto pb-1 scrollbar-hide">
+              <DemoEngine />
+            </div>
+            <div className="w-full overflow-x-auto pb-1 scrollbar-hide">
+              <ExportSystem />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
@@ -46,7 +79,7 @@ export default function Home() {
   const [mobileTab, setMobileTab] = useState<'canvas' | 'analytics' | 'chat'>('canvas');
 
   return (
-    <main className="flex flex-col h-screen w-full overflow-hidden bg-black text-white selection:bg-indigo-500/30 relative">
+    <main className="flex flex-col h-[100dvh] w-full overflow-hidden bg-black text-white selection:bg-indigo-500/30 relative">
       
       <Header />
       

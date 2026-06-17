@@ -39,15 +39,15 @@ export const PricingTable = () => {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
-              className="flex justify-between items-center text-sm group"
+              className="flex justify-between items-start text-sm group"
             >
-              <div className="flex items-start space-x-2 pt-1">
+              <div className="flex items-start space-x-2 pt-1 flex-1 min-w-0 pr-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0 mt-1.5" />
-                <span className="text-zinc-300 leading-snug pr-4">
+                <span className="text-zinc-300 leading-snug break-words">
                   {item.name} {item.qty > 1 && <span className="text-indigo-400 font-medium ml-1">x{item.qty}</span>}
                 </span>
               </div>
-              <span className="text-zinc-100 font-medium">${(Number.isNaN(Number(item.price)) ? 0 : Number(item.price) * item.qty).toLocaleString()}</span>
+              <span className="text-zinc-100 font-medium shrink-0 pt-1">${(Number.isNaN(Number(item.price)) ? 0 : Number(item.price) * item.qty).toLocaleString()}</span>
             </motion.div>
           ))}
         </AnimatePresence>
@@ -68,7 +68,7 @@ export const PricingTable = () => {
             key={totalPrice}
             initial={{ scale: 1.1, color: '#10b981' }}
             animate={{ scale: 1, color: '#ffffff' }}
-            className="text-2xl font-bold tracking-tight text-white"
+            className="text-xl sm:text-2xl font-bold tracking-tight text-white shrink-0"
           >
             ${(Number.isNaN(Number(totalPrice)) ? 0 : Number(totalPrice)).toLocaleString()}
           </motion.span>

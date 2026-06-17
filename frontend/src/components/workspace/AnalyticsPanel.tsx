@@ -28,9 +28,9 @@ export const AnalyticsPanel = () => {
       <div className="grid grid-cols-2 gap-x-4 gap-y-3">
         {metrics.map((metric) => (
           <div key={metric.label}>
-            <div className="flex justify-between text-[10px] mb-1">
-              <span className="text-zinc-400 font-medium uppercase tracking-wider">{metric.label}</span>
-              <span className="text-zinc-200 font-bold">{Math.round(metric.value)}</span>
+            <div className="flex justify-between text-[10px] mb-1 space-x-1">
+              <span className="text-zinc-400 font-medium uppercase tracking-wider truncate pr-1">{metric.label}</span>
+              <span className="text-zinc-200 font-bold shrink-0">{Math.round(metric.value)}</span>
             </div>
             <div className="w-full bg-zinc-800/80 rounded-full h-1 overflow-hidden">
               <motion.div 

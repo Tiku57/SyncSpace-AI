@@ -89,7 +89,7 @@ export const AIChat = () => {
                 {msg.sender === 'user' ? <User className="w-4 h-4 text-zinc-300" /> : <Bot className="w-4 h-4" />}
               </div>
               <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                <div className={`px-4 py-3 rounded-2xl max-w-[280px] text-sm leading-relaxed ${
+                <div className={`px-4 py-3 rounded-2xl max-w-[85%] sm:max-w-[280px] break-words whitespace-pre-wrap text-sm leading-relaxed ${
                   msg.sender === 'user' 
                     ? 'bg-zinc-800 text-zinc-100 rounded-tr-sm' 
                     : 'bg-zinc-900 border border-white/5 text-zinc-300 rounded-tl-sm shadow-xl'
@@ -121,13 +121,13 @@ export const AIChat = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder={isConnected ? "E.g., I need a workstation..." : "Connecting to server..."}
             disabled={!isConnected}
-            className="w-full bg-zinc-950 border border-zinc-800 rounded-full pl-5 pr-12 py-3.5 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all disabled:opacity-50"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded-full pl-5 pr-20 py-3.5 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all disabled:opacity-50"
           />
           <button
             type="button"
             onClick={toggleListen}
             disabled={!isConnected}
-            className={`absolute right-12 p-2 rounded-full transition-colors ${
+            className={`absolute right-12 w-9 h-9 flex items-center justify-center rounded-full transition-colors shrink-0 ${
               isListening ? 'bg-red-500 text-white animate-pulse' : 'text-zinc-400 hover:text-white'
             }`}
           >
@@ -137,7 +137,7 @@ export const AIChat = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className="absolute right-2 p-2 bg-red-600/20 text-red-500 border border-red-500/50 rounded-full hover:bg-red-600/40 transition-colors flex items-center justify-center group"
+              className="absolute right-1.5 w-9 h-9 bg-red-600/20 text-red-500 border border-red-500/50 rounded-full hover:bg-red-600/40 transition-colors flex items-center justify-center group shrink-0"
               title="Cancel Current Generation"
             >
               <XCircle className="w-4 h-4" />
@@ -146,7 +146,7 @@ export const AIChat = () => {
             <button
               type="submit"
               disabled={!input.trim() || !isConnected}
-              className="absolute right-2 p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-500 transition-colors disabled:opacity-50 disabled:hover:bg-indigo-600"
+              className="absolute right-1.5 w-9 h-9 flex items-center justify-center bg-indigo-600 text-white rounded-full hover:bg-indigo-500 transition-colors disabled:opacity-50 disabled:hover:bg-indigo-600 shrink-0"
             >
               <Send className="w-4 h-4" />
             </button>
